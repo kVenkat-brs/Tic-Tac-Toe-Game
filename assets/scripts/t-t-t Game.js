@@ -31,12 +31,14 @@ function startGame() {
   }
 }
 
+//  Event Listener function
 function addClickListeners() {
   cells.forEach((cell, index) => {
     cell.addEventListener("click", () => handleCellClick(cell, index), { once: true });
   });
 }
 
+// Function for Event Listener
 function handleCellClick(cell, index) {
   if (cell.classList.contains("cellx") || cell.classList.contains("cellc")){
     
@@ -46,26 +48,26 @@ function handleCellClick(cell, index) {
   cell.classList.remove("x", "c"); // Removing hover effect
   cell.classList.add(playerChance === "x" ? "cellx" : "cellc"); // Assign actual move
 
+//   Checking the winner
   if (checkWinning()) {
-    // setTimeout(() => alert(`${playerChance === "x" ? playerOneName.value : playerTwoName.value} wins!`), 100);
-    alert(`${playerChance === "x" ? playerOneName.value : playerTwoName.value} wins!`)
-    // setTimeout(resetGame, 500);
+    alert(`${playerChance === "x" ? playerOneName.value : playerTwoName.value} wins!`);
     resetGame();
     return;
   }
 
+//   Checking if it is draw
   if (checkDraw()) {
-    // setTimeout(() => alert("Game is a Draw!"), 100);
     alert("Game is a Draw!")
-    // setTimeout(resetGame, 500);
     resetGame();
     return;
   }
 
+//   changing player chances
   playerChance = playerChance === "x" ? "c" : "x";
   updateHoverEffect();
 }
 
+// function for checkwinning
 function checkWinning() {
   return WIN_POSSIBILITIES.some(combination =>
     combination.every(index =>
@@ -74,10 +76,13 @@ function checkWinning() {
   );
 }
 
+//  function checking draw
 function checkDraw() {
   return [...cells].every(cell => cell.classList.contains("cellx") || cell.classList.contains("cellc"));
 }
 
+
+// function for changing the hovering affect
 function updateHoverEffect() {
   cells.forEach(cell => {
     if (!cell.classList.contains("cellx") && !cell.classList.contains("cellc")) {
@@ -87,6 +92,8 @@ function updateHoverEffect() {
   });
 }
 
+
+// function for clearing the board
 function clearBoard() {
   cells.forEach(cell => {
     cell.classList.remove("cellx", "cellc", "x", "c");
@@ -94,6 +101,8 @@ function clearBoard() {
   playerChance = "x";
 }
 
+
+// Function for reset button
 function resetGame() {
   gameSection.classList.add("d-none");
   btnContainer.style.display = "block";
